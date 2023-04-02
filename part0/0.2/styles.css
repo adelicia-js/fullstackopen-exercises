@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+::before,
+::after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  background: linear-gradient(
+      217deg,
+      rgba(247, 252, 0, 0.8),
+      rgba(243, 200, 6, 0.527) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 212, 240, 0.8), rgba(0, 153, 255, 0) 70.71%),
+    linear-gradient(
+      336deg,
+      rgba(199, 17, 255, 0.8),
+      rgba(255, 0, 242, 0) 70.71%
+    );
+  background-attachment: fixed;
+  margin: 0;
+  font-family: "Anonymous Pro", monospace;
+  text-align: center;
+}
+
+header {
+  text-transform: uppercase;
+}
+
+header span {
+  color: rgba(42, 170, 16, 0.8);
+  text-shadow: 1px 0.5px 5px #91ff00, 1px 0.5px 5px #91ff00;
+  font-weight: bold;
+  font-style: italic;
+  letter-spacing: 0.2rem;
+  font-size: 2.5rem;
+}
+
+main figure img {
+  border-radius: 3%;
+}
+
+main figure img:hover {
+  box-shadow: 1px 0.5px 5px #00000070, 1px 0.1px 50px #d0ff00,
+    1px 0.5px 5px #08ceff70;
+}
+
+main figure figcaption {
+  color: #00000070;
+}
+
+main figure a {
+  text-decoration: none;
+  color: #00000070;
+}
+
+main figure a:hover {
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-weight: bold;
+  color: #012404;
+  text-shadow: 1px 0.5px 5px #53fa11, 1px 0.5px 1px #012404, 1px 0.5px #d0ff00;
+}
+
+main .some-text {
+  font-size: 1.5rem;
+}
+
+main .some-list ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 0;
+  padding: 1rem;
+}
+
+main .some-list ul li {
+  font-size: 1.3rem;
+  color: #012404c0;
+}
+
+main .some-list ul li:last-child {
+  letter-spacing: 1rem;
+  color: #01240460;
+}
+
+footer {
+  border: 1px dotted #0000006c;
+  font-size: 1.2rem;
+}
+
+footer a {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: black;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-shadow: 1px 0.1px 5px rgb(142, 5, 255);
+  text-decoration: underline dotted rgba(0, 0, 0, 0.342) 0.1px;
+}

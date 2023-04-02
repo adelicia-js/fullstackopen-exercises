@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="shortcut icon"
+      href="https://cdn-icons-png.flaticon.com/512/9318/9318633.png"
+      type="image/x-icon"
+    />
+    <title>Survey Form</title>
+  </head>
+  <body>
+    <main>
+      <div id="form-heading">
+        <h1 id="title">A Web Dev Survey</h1>
+        <p id="description">For Students</p>
+      </div>
+
+      <form action="#index.html" id="survey-form" method="post">
+        <div id="form-body">
+          <fieldset id="personal-details">
+            <h2>Personal Details</h2>
+            <hr />
+            <label id="name-label" for="name"
+              >Name
+              <input
+                id="name"
+                type="text"
+                placeholder="Enter your name"
+                required
+              />
+            </label>
+            <label id="email-label" for="email"
+              >Email
+              <input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                required
+              />
+            </label>
+            <label id="number-label" for="number"
+              >Age
+              <input
+                id="number"
+                type="number"
+                min="13"
+                max="120"
+                placeholder="Enter your age"
+                required
+              />
+            </label>
+          </fieldset>
+
+          <fieldset id="learning-details">
+            <h2>Learning Progress</h2>
+            <hr />
+            <label id="radio-buttons" class="learning-q">
+              Are you currently learning web development?
+              <label for="yes-web">
+                <input type="radio" name="recs" id="yes-adopt" value="yes" />
+                Yes
+              </label>
+              <label for="no-web">
+                <input type="radio" name="recs" id="no-adopt" value="no" />
+                No
+              </label>
+            </label>
+
+            <label id="checkbox-options" class="learning-q">
+              What have you learnt so far?
+              <label for="html-skill">
+                <input
+                  type="checkbox"
+                  name="skill-set"
+                  id="html-skill"
+                  value="html-skill"
+                />
+                HTML
+              </label>
+              <label for="css-skill">
+                <input
+                  type="checkbox"
+                  name="skill-set"
+                  id="css-skill"
+                  value="css-skill"
+                />
+                CSS
+              </label>
+              <label for="js-skill">
+                <input
+                  type="checkbox"
+                  name="skill-set"
+                  id="js-skill"
+                  value="js-skill"
+                />
+                Javascript
+              </label>
+              <label for="frameworks">
+                <input
+                  type="checkbox"
+                  name="skill-set"
+                  id="frameworks"
+                  value="frameworks"
+                />
+                Frameworks(Bootstrap, React, etc..)
+              </label>
+            </label>
+
+            <label for="dropdown" class="learning-q">
+              What do you find most difficult to learn?
+              <select id="dropdown" name="dropdown">
+                <option value="" name="options">(select one)</option>
+                <option value="1" name="options">The Box Model</option>
+                <option value="3" name="options">Grid and Flexbox</option>
+                <option value="2" name="options">Javascript programming</option>
+                <option value="2" name="options">None of the above</option>
+              </select>
+            </label>
+          </fieldset>
+
+          <fieldset id="student-feedback">
+            <h2>Feedback</h2>
+            <hr />
+            <label for="feedback">
+              Any comments you'd like to leave?
+              <textarea
+                name="feedback"
+                id="feedback"
+                cols="45"
+                rows="10"
+                placeholder="Enter your feedback here..."
+              ></textarea>
+            </label>
+          </fieldset>
+
+          <fieldset id="submit-button">
+            <button id="submit" type="submit">Submit</button>
+          </fieldset>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
