@@ -2,7 +2,7 @@ import Part from "./Part";
 
 const Content = (props) => {
     console.log(props);
-    const array = props.partsArr;
+    const array = props.partsArr.parts;
     return (
       <>
         <Part names={array[0].name} numbers={array[0].exercises} />
