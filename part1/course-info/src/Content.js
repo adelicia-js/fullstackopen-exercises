@@ -1,14 +1,16 @@
 import Part from "./Part";
 
 const Content = (props) => {
-  console.log(props);
-  return (
-    <>
-      <Part part={props.part1} exercises={props.exercises1} />
-      <Part part={props.part2} exercises={props.exercises2} />
-      <Part part={props.part3} exercises={props.exercises3} />
-    </>
-  );
-};
+    console.log(props);
+    const array = props.partsArr;
+    return (
+      <>
+        <Part names={array[0].name} numbers={array[0].exercises} />
+        <Part names={array[1].name} numbers={array[1].exercises} />
+        <Part names={array[2].name} numbers={array[2].exercises} />
+      </>
+    );
+  };
 
 export default Content;
+
