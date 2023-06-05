@@ -14,8 +14,10 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState([0,0,0,0,0,0,0,0]);
+  const copy = [...votes];
 
-  console.log('anecdote number: ', selected);
+  console.log('anecdote number: ', selected + '\nvotes count: ' + votes);
 
   const ranNum = (min,max) => {
     return Math.floor(Math.random() * (max-min)) + min;
@@ -27,10 +29,25 @@ const App = () => {
     setSelected(anec);
   }
 
+  const updateVote = () => {
+    copy[selected] += 1;
+    setVotes(copy);
+    console.log('copy..',copy)
+    console.log('updated points...',votes);
+  }
+
+  const reset = () => {
+    setSelected(0);
+    setVotes([0,0,0,0,0,0,0,0]);
+  }
+
   return (
     <div>
       <p id='anecdote'>{anecdotes[selected]}</p>
+      <p>This anecdote has {votes[selected]} votes! :{')'}</p>
+      <button onClick={updateVote}>vote</button>
       <button onClick={ranAnec}>next anecdote</button>
+      <button onClick={reset}>reset</button>
     </div>
   );
 };
