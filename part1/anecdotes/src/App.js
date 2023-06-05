@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const App = () => {
-
   const anecdotes = [
     "If it hurts, do it more often.",
     "Adding manpower to a late software project makes it later!",
@@ -14,40 +13,59 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
-  const [votes, setVotes] = useState([0,0,0,0,0,0,0,0]);
+  const emptyArr = new Array(anecdotes.length).fill(0);
+  const [votes, setVotes] = useState(emptyArr);
+  const [maxVotes, setMaxVotes] = useState(0);
   const copy = [...votes];
 
-  console.log('anecdote number: ', selected + '\nvotes count: ' + votes);
+  console.log(
+    "anecdote number: ",
+    selected,
+    "\nvotes count: ",
+    votes,
+    "\nmax votes: ",
+    maxVotes
+  );
 
-  const ranNum = (min,max) => {
-    return Math.floor(Math.random() * (max-min)) + min;
-  }
 
   const ranAnec = () => {
-    const anec = ranNum(0, anecdotes.length);
-    console.log(anecdotes.length);
+    const anec = Math.floor(Math.random() * anecdotes.length);
     setSelected(anec);
-  }
+  };
 
   const updateVote = () => {
     copy[selected] += 1;
-    setVotes(copy);
-    console.log('copy..',copy)
-    console.log('updated points...',votes);
-  }
+    if (copy[selected] > copy[maxVotes]) {
+      setMaxVotes(selected);
+      setVotes(copy);
+    } else {
+      setVotes(copy);
+    }
+    console.log("copy..", copy);
+    console.log("updated points...", votes);
+  };
 
   const reset = () => {
     setSelected(0);
-    setVotes([0,0,0,0,0,0,0,0]);
-  }
+    setVotes(emptyArr);
+  };
 
   return (
-    <div>
-      <p id='anecdote'>{anecdotes[selected]}</p>
-      <p>This anecdote has {votes[selected]} votes! :{')'}</p>
+    <div style={{ fontFamily: "monospace" }}>
+      <h1>Random Anecdotes</h1>
+      <h2>Anecdote of the Day</h2>
+      <p id="anecdote">{anecdotes[selected]}</p>
+      <p>
+        This anecdote has {votes[selected]} votes! :{")"}
+      </p>
       <button onClick={updateVote}>vote</button>
       <button onClick={ranAnec}>next anecdote</button>
       <button onClick={reset}>reset</button>
+      <h2>Anecdote with most votes</h2>
+      <p>{anecdotes[maxVotes]}</p>
+      <p>
+        This anecdote has {votes[maxVotes]} votes! :{")"}
+      </p>
     </div>
   );
 };
