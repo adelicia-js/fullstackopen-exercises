@@ -2,7 +2,7 @@ const Header = (props) => {
     console.log(props);
     return (
       <>
-        <h1>{props.title.name}</h1>
+        <h1 style={{color:'#4C2878', fontSize:'3rem'}}>{props.title.name}</h1>
       </>
     );
   };

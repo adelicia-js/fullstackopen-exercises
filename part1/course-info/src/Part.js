@@ -2,8 +2,8 @@ const Part = (props) => {
     console.log(props);
     return (
       <>
-        <p>
-          {props.names} {props.numbers}
+        <p style={{color:'#BE2260', fontSize:'1.5rem'}}>
+          {props.names}: {props.numbers}
         </p>
       </>
     );

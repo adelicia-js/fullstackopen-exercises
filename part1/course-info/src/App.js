@@ -1,6 +1,7 @@
 import Header from "./Header";
 import Content from "./Content";
 import Total from "./Total";
+import Desc from "./Desc";
 
 const App = () => {
   const course = {
@@ -22,10 +23,11 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div style={{fontFamily:'monospace', backgroundColor:'#E6EE9C'}}>
       <Header title={course} />
       <Content partsArr={course} />
       <Total exerciseArr={course} />
+      <Desc/>
     </div>
   );
 };
