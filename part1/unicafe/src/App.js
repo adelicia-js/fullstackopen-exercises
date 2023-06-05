@@ -1,29 +1,51 @@
 import {useState} from 'react';
 
+const Stats = (props) => {
+
+  const goodScore = props.good * 1;
+  const neutralScore = props.neutral * 0;
+  const badScore = props.bad * -1;
+
+  const avg = (goodScore + neutralScore + badScore)/props.total;
+
+  const posPer = (props.good/props.total)*100;
+
+  return (
+    <>
+      <p>average: {avg}</p>
+      <p>positive %: {posPer}</p>
+    </>
+  )
+}
+
 const App = () => {
 
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  console.log('rendering...', '\ngood: ',good,'\nneutral: ', neutral, '\nbad: ', bad);
+  console.log('rendering...', '\ngood: ',good,'\nneutral: ', neutral, '\nbad: ', bad, '\ntotal: ', total);
 
   const handleGood = () => {
     const updatedGood = good + 1;
     setGood(updatedGood);
-    console.log('updated good: ', good);
+    setTotal(updatedGood + neutral + bad);
+    console.log('updated good: ', good, '\nupdated total: ', total);
   } 
 
   const handleNeutral = () => {
     const updatedNeutral = neutral + 1;
     setNeutral(updatedNeutral);
-    console.log('updated neutral: ', neutral);
+    setTotal(good + updatedNeutral + bad);
+    console.log('updated neutral: ', neutral, '\ntotal: ', total);
   }
 
   const handleBad = () => {
     const updatedBad = bad + 1;
     setBad(updatedBad);
-    console.log('updated bad: ', bad);
+    setTotal(good + neutral + updatedBad);
+    console.log('bad: ', bad, '\ntotal: ', total);
   }
 
   return (
@@ -40,6 +62,8 @@ const App = () => {
       <p>good: {good}</p>
       <p>neutral: {neutral}</p>
       <p>bad: {bad}</p>
+      <p>total: {total}</p>
+      <Stats good={good} neutral={neutral} bad={bad} total={total}/>
     </div>
   );
 }
