@@ -1,21 +1,24 @@
 import {useState} from 'react';
 
 const Stats = (props) => {
-
-  const goodScore = props.good * 1;
-  const neutralScore = props.neutral * 0;
-  const badScore = props.bad * -1;
-
-  const avg = (goodScore + neutralScore + badScore)/props.total;
-
-  const posPer = (props.good/props.total)*100;
-
-  return (
-    <>
-      <p>average: {avg}</p>
-      <p>positive %: {posPer}</p>
-    </>
-  )
+    const goodScore = props.good * 1;
+    const neutralScore = props.neutral * 0;
+    const badScore = props.bad * -1;
+  
+    const avg = (goodScore + neutralScore + badScore)/props.total;
+  
+    const posPer = (props.good/props.total)*100;
+  
+    return (
+      <>
+        <p>good: {props.good}</p>
+        <p>neutral: {props.neutral}</p>
+        <p>bad: {props.bad}</p>
+        <p>total: {props.total}</p>
+        <p>average: {avg}</p>
+        <p>positive %: {posPer}</p>
+      </>
+    )
 }
 
 const App = () => {
@@ -59,10 +62,6 @@ const App = () => {
       <button onClick={handleBad}>bad</button>
 
       <h2>Statistics</h2>
-      <p>good: {good}</p>
-      <p>neutral: {neutral}</p>
-      <p>bad: {bad}</p>
-      <p>total: {total}</p>
       <Stats good={good} neutral={neutral} bad={bad} total={total}/>
     </div>
   );
