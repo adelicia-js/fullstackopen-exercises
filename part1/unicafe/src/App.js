@@ -1,6 +1,13 @@
 import {useState} from 'react';
 
 const Stats = (props) => {
+  if(props.total === 0) {
+    return (
+      <>
+        <p>No feedback given yet! :{'('}</p>
+      </>
+    )
+  } else {
     const goodScore = props.good * 1;
     const neutralScore = props.neutral * 0;
     const badScore = props.bad * -1;
@@ -19,6 +26,8 @@ const Stats = (props) => {
         <p>positive %: {posPer}</p>
       </>
     )
+  }
+
 }
 
 const App = () => {
