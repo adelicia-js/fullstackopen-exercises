@@ -1,5 +1,14 @@
 import { useState } from "react";
-import Button from "./Button";
+
+const Button = ({handleClick, text}) => {
+  return (
+      <div>
+          <button onClick={handleClick}>
+              {text}
+          </button>
+      </div>
+  )
+}
 
 const StatisticLine = ({ text, value }) => {
   return (
