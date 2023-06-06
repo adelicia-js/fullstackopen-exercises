@@ -1,5 +1,31 @@
 import { useState } from "react";
 
+const Header = ({text}) => {
+  return(
+    <div>
+      <h1 style={{fontSize: '3rem', color: '#8F1C1C'}}>Random Anecdotes</h1>
+    </div>
+  )
+}
+
+const Button = ({handleClick, text}) => {
+  return (
+    <div>
+      <button onClick={handleClick} style={{fontSize: '0.9rem'}}>{text}</button>
+    </div>
+  )
+}
+
+const DisplayAnec = ({text, anecdotes, anecNum, points}) => {
+  return (
+    <div>
+      <h2 style={{fontSize: '2rem', color: '#E65100'}}>{text}</h2>
+      <p style={{fontSize: '1.2rem', color: '#E53935'}}>{anecdotes[anecNum]}</p>
+      <p style={{fontSize: '1rem'}}>This anecdote has {points[anecNum]} votes! :{')'}</p>
+    </div>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -48,24 +74,19 @@ const App = () => {
   const reset = () => {
     setSelected(0);
     setVotes(emptyArr);
+    setMaxVotes(0);
   };
 
   return (
-    <div style={{ fontFamily: "monospace" }}>
-      <h1>Random Anecdotes</h1>
-      <h2>Anecdote of the Day</h2>
-      <p id="anecdote">{anecdotes[selected]}</p>
-      <p>
-        This anecdote has {votes[selected]} votes! :{")"}
-      </p>
-      <button onClick={updateVote}>vote</button>
-      <button onClick={ranAnec}>next anecdote</button>
-      <button onClick={reset}>reset</button>
-      <h2>Anecdote with most votes</h2>
-      <p>{anecdotes[maxVotes]}</p>
-      <p>
-        This anecdote has {votes[maxVotes]} votes! :{")"}
-      </p>
+    <div style={{ fontFamily: "monospace", backgroundColor: '#FFEE58'}}>
+      <Header/>
+      <DisplayAnec text='Anecdote of the Day' anecdotes={anecdotes} anecNum={selected} points={votes}/>
+      <Button handleClick={updateVote} text='vote'/>
+      <Button handleClick={ranAnec} text='next anecdote'/>
+      <Button handleClick={reset} text='reset'/>        
+      <DisplayAnec text='Anecdote with most votes' anecdotes={anecdotes} anecNum={maxVotes} points={votes}/>
+
+
     </div>
   );
 };
