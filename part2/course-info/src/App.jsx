@@ -13,36 +13,28 @@ Header.propTypes = {
   name: PropTypes.string,
 };
 
-const Part = ({ part, exercises }) => {
+const Part = ({ partsArr }) => {
   return (
     <>
-      <p style={{ color: "#BE2260", fontSize: "1.5rem" }}>
-        {part}: {exercises}
-      </p>
+      <li style={{ color: "#BE2260", fontSize: "1.5rem", padding:"0 0 0.5rem 0.5rem" }}>
+        {partsArr.name}: {partsArr.exercises}
+      </li>
     </>
   );
 };
 
 Part.propTypes = {
-  part: PropTypes.string,
+  partsArr: PropTypes.object,
+  name: PropTypes.string,
   exercises: PropTypes.number,
 };
 
 const Content = ({ courseArr }) => {
   return (
     <>
-      <Part
-        part={courseArr.parts[0].name}
-        exercises={courseArr.parts[0].exercises}
-      />
-      <Part
-        part={courseArr.parts[1].name}
-        exercises={courseArr.parts[1].exercises}
-      />
-      <Part
-        part={courseArr.parts[2].name}
-        exercises={courseArr.parts[2].exercises}
-      />
+      {courseArr.parts.map((courseType) => (
+        <Part key={courseType.id} partsArr={courseType} />
+      ))}
     </>
   );
 };
@@ -50,18 +42,19 @@ const Content = ({ courseArr }) => {
 Content.propTypes = {
   courseArr: PropTypes.object,
   parts: PropTypes.array,
-  name: PropTypes.string,
-  exercises: PropTypes.number,
 };
 
 const Total = ({ courseArr }) => {
   return (
     <>
       <p style={{ color: "#BE2260", fontSize: "1.5rem" }}>
-        Total of exercises: {""}
-        {courseArr.parts[0].exercises +
-          courseArr.parts[1].exercises +
-          courseArr.parts[2].exercises}
+        Total of{" "}
+        <span style={{ color: "#9B1A1A", fontWeight: "bolder" }}>
+          {courseArr.parts[0].exercises +
+            courseArr.parts[1].exercises +
+            courseArr.parts[2].exercises}
+        </span>{" "}
+        exercises
       </p>
     </>
   );
@@ -75,15 +68,15 @@ Total.propTypes = {
 
 const Desc = () => {
   return (
-    <>
-      <p style={{ color: "#1198DA", fontSize: "1rem" }}>
+    <div style={{backgroundColor: "#CE93D8", borderTop:"1px solid #7B1F73", padding:"1rem"}}>
+      <p style={{ color: "#2C0C51", fontSize: "1.1rem" }}>
         This app was an exercise to understand and learn:
-        <ul>
-          <li>how props work</li>
-          <li>how to render collections</li>
-        </ul>
       </p>
-    </>
+      <ul style={{ color: "#2C0C51", fontSize: "1rem" }}>
+        <li>how props work</li>
+        <li>how to render collections</li>
+      </ul>
+    </div>
   );
 };
 
@@ -92,7 +85,7 @@ const Course = ({ course }) => {
     <div>
       <Header courseArr={course} />
       <Content courseArr={course} />
-      {/* <Total courseArr={course}/> */}
+      <Total courseArr={course} />
       <Desc />
     </div>
   );
@@ -121,6 +114,11 @@ const App = () => {
         name: "State of a component",
         exercises: 14,
         id: 3,
+      },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
       },
     ],
   };
