@@ -45,14 +45,16 @@ Content.propTypes = {
 };
 
 const Total = ({ courseArr }) => {
+  const exerciseValues = courseArr.parts.map((courseType)=>(courseType.exercises));
+  const total = exerciseValues.reduce((prevVal,currVal)=>(prevVal+currVal));
+  console.log("exercises array: ",exerciseValues)
+  console.log("total: ",total)
   return (
     <>
       <p style={{ color: "#BE2260", fontSize: "1.5rem" }}>
         Total of{" "}
         <span style={{ color: "#9B1A1A", fontWeight: "bolder" }}>
-          {courseArr.parts[0].exercises +
-            courseArr.parts[1].exercises +
-            courseArr.parts[2].exercises}
+          {total}
         </span>{" "}
         exercises
       </p>
