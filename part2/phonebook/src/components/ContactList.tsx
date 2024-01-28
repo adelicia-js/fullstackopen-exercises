@@ -5,7 +5,7 @@ export default function ContactList(props: ContactListProps) {
     <>
       <h2>Contacts</h2>
       <ul className="person-list">
-        {props.filteredNotes.map((person, index) => (
+        {props.filteredNames.map((person, index) => (
           <li key={index} className="person-item">
             <span className="person-name">{person.name}</span>
             <span className="person-phone">{person.phone}</span>

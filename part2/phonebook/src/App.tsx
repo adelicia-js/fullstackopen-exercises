@@ -6,14 +6,14 @@ import AddContact from "./components/AddContact";
 import ContactList from "./components/ContactList";
 
 const App = () => {
-  const [persons, setPersons] = useState([]);
+  const [persons, setPersons] = useState<PersonItem[]>([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(()=>{
     axios.get('http://localhost:3001/persons').then(response=>{
-      // console.log(response.data);
+      console.log(response.data);
       setPersons(response.data);
     });
   },[]);
@@ -37,14 +37,15 @@ const App = () => {
     const newPerson = {
       name: newName,
       phone: newPhone,
-      id: persons.length + 1,
     };
     {
       !checkIfPersonExists(newPerson, persons)
-        ? setPersons([...persons, newPerson])
-        : alert(`Person is already added to the phonebook!`);
-        setNewName("");
-        setNewPhone("");
+        axios.post('http://localhost:3001/persons', newPerson).then(response=>{
+          console.log(response.data);
+          setPersons([...persons, response.data]);
+          setNewName("");
+          setNewPhone("");
+        })
     }
   };
 
@@ -62,7 +63,7 @@ const App = () => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredNotes = persons.filter((person) =>
+  const filteredNames = persons.filter((person) =>
     person.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -73,7 +74,8 @@ const App = () => {
       <Search searchQuery={searchQuery} handleSearchInput={handleSearchInput}/>
 
       <AddContact newName={newName} newPhone={newPhone} handleNameInput={handleNameInput} handlePhoneInput={handlePhoneInput} addNewPerson={addNewPerson}/>
-      <ContactList filteredNotes={filteredNotes}/>
+
+      <ContactList filteredNames={filteredNames}/>
 
     </div>
   );
