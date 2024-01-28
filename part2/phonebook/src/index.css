@@ -2,8 +2,12 @@
     font-family: monospace;
 }
 
-h2 {
+h1 {
     font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
 }
 
 p {
@@ -24,9 +28,11 @@ p {
     white-space: no-wrap;
     display: flex;
     gap: 0.5rem;
+    align-items: center;
 }
 
 .person-item .person-name {
+    font-size: 1.1rem;
     font-weight: 600;
 }
 

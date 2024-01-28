@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { People, PersonItem } from "./types";
+import Search from "./components/Search";
+import AddContact from "./components/AddContact";
+import ContactList from "./components/ContactList";
 
 const App = ({ people }: People) => {
   const [persons, setPersons] = useState(people);
@@ -57,34 +60,13 @@ const App = ({ people }: People) => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
 
-      <p>
-        Filter shown with:{" "}
-        <input value={searchQuery} onChange={handleSearchInput} />
-      </p>
+      <Search searchQuery={searchQuery} handleSearchInput={handleSearchInput}/>
 
-      <h2>Add a new contact</h2>
-      <form onSubmit={addNewPerson} id="add-person-form">
-        <div className="add-person-form-field">
-          Name: <input value={newName} onChange={handleNameInput} required />
-        </div>
-        <div className="add-person-form-field">
-          Phone: <input value={newPhone} onChange={handlePhoneInput} required />
-        </div>
-        <div>
-          <button type="submit">Add</button>
-        </div>
-      </form>
+      <AddContact newName={newName} newPhone={newPhone} handleNameInput={handleNameInput} handlePhoneInput={handlePhoneInput} addNewPerson={addNewPerson}/>
+      <ContactList filteredNotes={filteredNotes}/>
 
-      <h2>Contacts</h2>
-      <ul className="person-list">
-        {filteredNotes.map((person, index) => (
-          <li key={index} className="person-item">
-            <span className="person-name">{person.name}</span><span className="person-phone">{person.phone}</span>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
