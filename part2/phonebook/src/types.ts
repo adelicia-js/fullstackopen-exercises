@@ -12,7 +12,7 @@ export type AddContactProps = {
 }
 
 export type ContactListProps = {
-  filteredNames: PersonItem[];
+  filteredPeople: PersonItem[];
 }
 
 export interface PersonItem {

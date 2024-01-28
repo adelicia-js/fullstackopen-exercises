@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import personServices from "./services/persons";
 import { PersonItem } from "./types";
 import Search from "./components/Search";
 import AddContact from "./components/AddContact";
@@ -11,12 +11,11 @@ const App = () => {
   const [newPhone, setNewPhone] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
-  useEffect(()=>{
-    axios.get('http://localhost:3001/persons').then(response=>{
-      console.log(response.data);
-      setPersons(response.data);
+  useEffect(() => {
+    personServices.getAll().then((initialData) => {
+      setPersons(initialData);
     });
-  },[]);
+  }, []);
 
   // checks for duplicate entries
   const checkIfPersonExists = (
@@ -24,6 +23,9 @@ const App = () => {
     personList: PersonItem[]
   ) => {
     // some is an array method that returns true if at least one element passes the test (function passed)
+    console.log(
+      personList.some((personItem) => personItem.name === inputPerson.name)
+    );
     return personList.some(
       (personItem) =>
         personItem.name === inputPerson.name ||
@@ -38,15 +40,24 @@ const App = () => {
       name: newName,
       phone: newPhone,
     };
-    {
-      !checkIfPersonExists(newPerson, persons)
-        axios.post('http://localhost:3001/persons', newPerson).then(response=>{
-          console.log(response.data);
-          setPersons([...persons, response.data]);
+
+    !checkIfPersonExists(newPerson, persons)
+    // if person does not already exist, contact is added
+      ? personServices
+        .addNew(newPerson)
+        .then((returnedPerson) => {
+          setPersons([...persons, returnedPerson]);
           setNewName("");
           setNewPhone("");
         })
-    }
+        .catch((error) => {
+          console.log(error);
+          alert("Error adding contact!");
+        })
+    // if person does already exist in book, contact is NOT added
+      : (alert(`Person is already added to phonebook!`),
+        setNewName(""),
+        setNewPhone(""));
   };
 
   // Handle name being input
@@ -59,24 +70,32 @@ const App = () => {
     setNewPhone(event.target.value);
   };
 
+  // Handle filter input - input name / phone
   const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
-  const filteredNames = persons.filter((person) =>
-    person.name.toLowerCase().includes(searchQuery.toLowerCase())
+  // Returns a filtered list of contacts - input name / phone
+  const filteredPeople = persons.filter((person) => 
+    person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    person.phone.includes(searchQuery)
   );
 
   return (
     <div>
       <h1>Phonebook</h1>
 
-      <Search searchQuery={searchQuery} handleSearchInput={handleSearchInput}/>
+      <Search searchQuery={searchQuery} handleSearchInput={handleSearchInput} />
 
-      <AddContact newName={newName} newPhone={newPhone} handleNameInput={handleNameInput} handlePhoneInput={handlePhoneInput} addNewPerson={addNewPerson}/>
+      <AddContact
+        newName={newName}
+        newPhone={newPhone}
+        handleNameInput={handleNameInput}
+        handlePhoneInput={handlePhoneInput}
+        addNewPerson={addNewPerson}
+      />
 
-      <ContactList filteredNames={filteredNames}/>
-
+      <ContactList filteredPeople={filteredPeople} />
     </div>
   );
 };
