@@ -4,11 +4,19 @@ import { People, PersonItem } from "./types";
 const App = ({ people }: People) => {
   const [persons, setPersons] = useState(people);
   const [newName, setNewName] = useState("");
+  const [newPhone, setNewPhone] = useState("");
 
   // checks for duplicate entries
-  const checkIfNameExists = (inputName: string, personList: PersonItem[]) => {
+  const checkIfPersonExists = (
+    inputPerson: PersonItem,
+    personList: PersonItem[]
+  ) => {
     // some is an array method that returns true if at least one element passes the test (function passed)
-    return personList.some((personItem) => personItem.name === inputName);
+    return personList.some(
+      (personItem) =>
+        personItem.name === inputPerson.name ||
+        personItem.phone === inputPerson.phone
+    );
   };
 
   // Add a new person to the phonebook
@@ -16,17 +24,23 @@ const App = ({ people }: People) => {
     event.preventDefault();
     const newPerson = {
       name: newName,
+      phone: newPhone,
     };
     {
-      !checkIfNameExists(newName, persons)
+      !checkIfPersonExists(newPerson, persons)
         ? setPersons([...persons, newPerson])
-        : alert(`${newName} is already added to the phonebook!`);
+        : alert(`Person is already added to the phonebook!`);
     }
   };
 
-  // Handle changes to the input
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle name being input
+  const handleNameInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewName(event.target.value);
+  };
+
+  // Handle phone being input
+  const handlePhoneInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNewPhone(event.target.value);
   };
 
   return (
@@ -35,7 +49,10 @@ const App = ({ people }: People) => {
 
       <form onSubmit={addNewPerson}>
         <div>
-          name: <input value={newName} onChange={handleInputChange} />
+          name: <input value={newName} onChange={handleNameInput} required />
+        </div>
+        <div>
+          phone: <input value={newPhone} onChange={handlePhoneInput} required />
         </div>
         <div>
           <button type="submit">add</button>
@@ -45,7 +62,9 @@ const App = ({ people }: People) => {
       <h2>Numbers</h2>
       <ul>
         {persons.map((person, index) => (
-          <li key={index}>{person.name}</li>
+          <li key={index}>
+            {person.name} {person.phone}
+          </li>
         ))}
       </ul>
     </div>
