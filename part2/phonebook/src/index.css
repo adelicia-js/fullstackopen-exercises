@@ -1,7 +1,35 @@
-ul {
+* {
+    font-family: monospace;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+#add-person-form .add-person-form-field{
+    padding-bottom: 1rem;
+}
+
+.person-list {
     padding-left: 0px;
 }
 
-li {
+.person-item {
     list-style: none;
+    padding-bottom: 0.5rem;
+    white-space: no-wrap;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.person-item .person-name {
+    font-weight: 600;
+}
+
+.person-item .person-phone {
+    color: blue;
 }
