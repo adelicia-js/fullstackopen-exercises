@@ -1,24 +1,33 @@
 import { useState } from "react";
-import { People } from "./types";
+import { People, PersonItem } from "./types";
 
-const App = ({people}: People) => {
+const App = ({ people }: People) => {
   const [persons, setPersons] = useState(people);
   const [newName, setNewName] = useState("");
+
+  // checks for duplicate entries
+  const checkIfNameExists = (inputName: string, personList: PersonItem[]) => {
+    // some is an array method that returns true if at least one element passes the test (function passed)
+    return personList.some((personItem) => personItem.name === inputName);
+  };
 
   // Add a new person to the phonebook
   const addNewPerson = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const newPerson = {
       name: newName,
+    };
+    {
+      !checkIfNameExists(newName, persons)
+        ? setPersons([...persons, newPerson])
+        : alert(`${newName} is already added to the phonebook!`);
     }
-    setPersons([...persons, newPerson]);
-    setNewName('');
-  }
+  };
 
   // Handle changes to the input
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewName(event.target.value);
-  }
+  };
 
   return (
     <div>
@@ -26,7 +35,7 @@ const App = ({people}: People) => {
 
       <form onSubmit={addNewPerson}>
         <div>
-          name: <input value={newName} onChange={handleInputChange}/>
+          name: <input value={newName} onChange={handleInputChange} />
         </div>
         <div>
           <button type="submit">add</button>
