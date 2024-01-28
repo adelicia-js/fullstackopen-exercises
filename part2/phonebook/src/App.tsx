@@ -1,14 +1,22 @@
-import { useState } from "react";
-import { People, PersonItem } from "./types";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { PersonItem } from "./types";
 import Search from "./components/Search";
 import AddContact from "./components/AddContact";
 import ContactList from "./components/ContactList";
 
-const App = ({ people }: People) => {
-  const [persons, setPersons] = useState(people);
+const App = () => {
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(()=>{
+    axios.get('http://localhost:3001/persons').then(response=>{
+      // console.log(response.data);
+      setPersons(response.data);
+    });
+  },[]);
 
   // checks for duplicate entries
   const checkIfPersonExists = (
