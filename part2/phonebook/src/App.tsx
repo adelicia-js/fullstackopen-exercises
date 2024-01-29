@@ -11,12 +11,12 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState('');
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   useEffect(() => {
     personServices.getAllData().then((initialData) => {
-      console.log('initial contact book: ', initialData);
+      console.log("initial contact book: ", initialData);
       setPersons(initialData);
     });
   }, []);
@@ -61,15 +61,15 @@ const App = () => {
       personServices
         .addNewItem(newPerson)
         .then((addedPerson) => {
-          console.log('added contact: ', addedPerson);
+          console.log("added contact: ", addedPerson);
           setPersons([...persons, addedPerson]);
           setNewName("");
           setNewPhone("");
-          setMessage(`Added ${addedPerson.name} to contacts!`)
-          setMessageType('addition');
-          setTimeout(()=> {
-            setMessage('');
-            setMessageType('');
+          setMessage(`Added ${addedPerson.name} to contacts!`);
+          setMessageType("addition");
+          setTimeout(() => {
+            setMessage("");
+            setMessageType("");
           }, 5000);
         })
         .catch((error) => {
@@ -90,7 +90,12 @@ const App = () => {
         personServices
           .updateItem(existingPerson?.id, newPerson)
           .then((updatedPerson) => {
-            console.log('old contact: ', existingPerson, 'new contact: ', updatedPerson);
+            console.log(
+              "old contact: ",
+              existingPerson,
+              "new contact: ",
+              updatedPerson
+            );
             setPersons(
               persons.map((person) =>
                 person.id !== updatedPerson.id ? person : updatedPerson
@@ -98,16 +103,25 @@ const App = () => {
             );
             setNewName("");
             setNewPhone("");
-            setMessage(`Updated ${updatedPerson.name}'s phone number!`)
-          setMessageType('addition');
-          setTimeout(()=> {
-            setMessage('');
-            setMessageType('');
-          }, 5000);
+            setMessage(`Updated ${updatedPerson.name}'s phone number!`);
+            setMessageType("addition");
+            setTimeout(() => {
+              setMessage("");
+              setMessageType("");
+            }, 5000);
           })
-          .catch((error) => {
-            console.log(error);
-            alert("Error updating contact!");
+          .catch(() => {
+            setNewName("");
+            setNewPhone("");
+            setMessage(
+              `Information of ${existingPerson?.name} has already been removed from server`
+            );
+            setPersons(persons.filter((person) => person.id !== existingPerson?.id));
+            setMessageType("error");
+            setTimeout(() => {
+              setMessage("");
+              setMessageType("");
+            }, 5000);
           });
       } else {
         setNewName("");
@@ -132,12 +146,12 @@ const App = () => {
           setPersons(
             persons.filter((person) => (person.id !== id ? person : null))
           );
-          setMessage(`Deleted '${personItem?.name}' from contacts.`)
-          setMessageType('deletion');
-          setTimeout(()=>{
-            setMessage('');
-            setMessageType('');
-          }, 5000)
+          setMessage(`Deleted '${personItem?.name}' from contacts.`);
+          setMessageType("deletion");
+          setTimeout(() => {
+            setMessage("");
+            setMessageType("");
+          }, 5000);
           console.log(persons.find((person) => person.id === id));
         })
         .catch((error) => {
@@ -150,7 +164,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
-      <Notification messageType={messageType} message={message}/>
+      <Notification messageType={messageType} message={message} />
 
       <Search searchQuery={searchQuery} handleSearchInput={handleSearchInput} />
 
