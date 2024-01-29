@@ -13,11 +13,13 @@ export type AddContactProps = {
 
 export type ContactListProps = {
   filteredPeople: PersonItem[];
+  deletePerson: (id: PersonItem["id"]) => void;
 }
 
 export interface PersonItem {
   name: string;
   phone: string;
+  id?: string | number;
 }
 
 export interface People {

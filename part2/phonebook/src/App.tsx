@@ -12,53 +12,10 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    personServices.getAll().then((initialData) => {
+    personServices.getAllData().then((initialData) => {
       setPersons(initialData);
     });
   }, []);
-
-  // checks for duplicate entries
-  const checkIfPersonExists = (
-    inputPerson: PersonItem,
-    personList: PersonItem[]
-  ) => {
-    // some is an array method that returns true if at least one element passes the test (function passed)
-    console.log(
-      personList.some((personItem) => personItem.name === inputPerson.name)
-    );
-    return personList.some(
-      (personItem) =>
-        personItem.name === inputPerson.name ||
-        personItem.phone === inputPerson.phone
-    );
-  };
-
-  // Add a new person to the phonebook
-  const addNewPerson = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const newPerson = {
-      name: newName,
-      phone: newPhone,
-    };
-
-    !checkIfPersonExists(newPerson, persons)
-    // if person does not already exist, contact is added
-      ? personServices
-        .addNew(newPerson)
-        .then((returnedPerson) => {
-          setPersons([...persons, returnedPerson]);
-          setNewName("");
-          setNewPhone("");
-        })
-        .catch((error) => {
-          console.log(error);
-          alert("Error adding contact!");
-        })
-    // if person does already exist in book, contact is NOT added
-      : (alert(`Person is already added to phonebook!`),
-        setNewName(""),
-        setNewPhone(""));
-  };
 
   // Handle name being input
   const handleNameInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,11 +32,67 @@ const App = () => {
     setSearchQuery(event.target.value);
   };
 
+  // checks for duplicate entries
+  const checkIfPersonExists = (
+    inputPerson: PersonItem,
+    personList: PersonItem[]
+  ) => {
+    // some is an array method that returns true if at least one element passes the test (function passed)
+    return personList.some(
+      (personItem) =>
+        personItem.name === inputPerson.name ||
+        personItem.phone === inputPerson.phone
+    );
+  };
+
+  // Add a new person to the phonebook
+  const addNewPerson = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const newPerson = {
+      name: newName,
+      phone: newPhone,
+    };
+
+    !checkIfPersonExists(newPerson, persons)
+      ? // if person does not already exist, contact is added
+        personServices
+          .addNewItem(newPerson)
+          .then((returnedPerson) => {
+            setPersons([...persons, returnedPerson]);
+            setNewName("");
+            setNewPhone("");
+          })
+          .catch((error) => {
+            console.log(error);
+            alert("Error adding contact!");
+          })
+      : // if person does already exist in book, contact is NOT added
+        (alert(`Person is already added to phonebook!`),
+        setNewName(""),
+        setNewPhone(""));
+  };
+
   // Returns a filtered list of contacts - input name / phone
-  const filteredPeople = persons.filter((person) => 
-    person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    person.phone.includes(searchQuery)
+  const filteredPeople = persons.filter(
+    (person) =>
+      person.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      person.phone.includes(searchQuery)
   );
+
+  const deletePerson = (id: PersonItem["id"]) => {
+    personServices
+      .deleteItem(id)
+      .then(() => {
+        setPersons(
+          persons.filter((person) => (person.id !== id ? person : null))
+        );
+        console.log(persons.find((person) => person.id === id));
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Error deleting contact!");
+      });
+  };
 
   return (
     <div>
@@ -95,7 +108,10 @@ const App = () => {
         addNewPerson={addNewPerson}
       />
 
-      <ContactList filteredPeople={filteredPeople} />
+      <ContactList
+        filteredPeople={filteredPeople}
+        deletePerson={deletePerson}
+      />
     </div>
   );
 };
