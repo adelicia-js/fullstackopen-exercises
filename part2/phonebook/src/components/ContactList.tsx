@@ -11,7 +11,7 @@ export default function ContactList(props: ContactListProps) {
             <span className="person-name">{person.name}</span>
             <span className="person-phone">{person.phone}</span>
             <span>
-              <button onClick={() => props.deletePerson(person.id)}>Delete</button>
+              <button id="delete-contact-button" onClick={() => props.deletePerson(person.id)}>Delete</button>
             </span>
           </li>
         ))}

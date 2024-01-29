@@ -39,3 +39,15 @@ p {
 .person-item .person-phone {
     color: blue;
 }
+
+#delete-contact-button {
+    padding: 0.1rem 0.5rem;
+    border-width: 0.1rem;
+    border-color: black;
+    border-radius: 5%;
+}
+
+#delete-contact-button:hover {
+    background-color: #5353fc;
+    color: white;
+}

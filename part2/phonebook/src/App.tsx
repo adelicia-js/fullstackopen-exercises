@@ -80,18 +80,19 @@ const App = () => {
   );
 
   const deletePerson = (id: PersonItem["id"]) => {
-    personServices
-      .deleteItem(id)
-      .then(() => {
-        setPersons(
-          persons.filter((person) => (person.id !== id ? person : null))
-        );
-        console.log(persons.find((person) => person.id === id));
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Error deleting contact!");
-      });
+    const personItem = persons.find((personItem) => personItem.id === id);
+    if (window.confirm(`Delete ${personItem?.name}?`)) {
+      personServices
+        .deleteItem(id)
+        .then(() => {
+          setPersons(persons.filter((person) => person.id !== id ? person : null));
+          console.log(persons.find((person) => person.id === id));
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Error deleting contact!");
+        });
+    }
   };
 
   return (
