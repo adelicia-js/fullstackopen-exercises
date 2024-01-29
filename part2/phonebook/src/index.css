@@ -51,3 +51,27 @@ p {
     background-color: #5353fc;
     color: white;
 }
+
+.addition {
+    color: white;
+    background: green;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: fit-content;
+  }
+  
+
+.deletion, .error {
+    color: white;
+    background: red;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: fit-content;
+  }
+  

@@ -22,6 +22,11 @@ export interface PersonItem {
   id?: string | number;
 }
 
+export interface NotificationProps {
+  message: string | null;
+  messageType: string;
+}
+
 export interface People {
   people: PersonItem[];
 }

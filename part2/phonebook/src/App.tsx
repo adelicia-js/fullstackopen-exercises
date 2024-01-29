@@ -4,12 +4,15 @@ import { PersonItem } from "./types";
 import Search from "./components/Search";
 import AddContact from "./components/AddContact";
 import ContactList from "./components/ContactList";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [persons, setPersons] = useState<PersonItem[]>([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
 
   useEffect(() => {
     personServices.getAllData().then((initialData) => {
@@ -62,6 +65,12 @@ const App = () => {
           setPersons([...persons, addedPerson]);
           setNewName("");
           setNewPhone("");
+          setMessage(`Added ${addedPerson.name} to contacts!`)
+          setMessageType('addition');
+          setTimeout(()=> {
+            setMessage('');
+            setMessageType('');
+          }, 5000);
         })
         .catch((error) => {
           console.log(error);
@@ -89,6 +98,12 @@ const App = () => {
             );
             setNewName("");
             setNewPhone("");
+            setMessage(`Updated ${updatedPerson.name}'s phone number!`)
+          setMessageType('addition');
+          setTimeout(()=> {
+            setMessage('');
+            setMessageType('');
+          }, 5000);
           })
           .catch((error) => {
             console.log(error);
@@ -117,6 +132,12 @@ const App = () => {
           setPersons(
             persons.filter((person) => (person.id !== id ? person : null))
           );
+          setMessage(`Deleted '${personItem?.name}' from contacts.`)
+          setMessageType('deletion');
+          setTimeout(()=>{
+            setMessage('');
+            setMessageType('');
+          }, 5000)
           console.log(persons.find((person) => person.id === id));
         })
         .catch((error) => {
@@ -129,6 +150,7 @@ const App = () => {
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification messageType={messageType} message={message}/>
 
       <Search searchQuery={searchQuery} handleSearchInput={handleSearchInput} />
 
