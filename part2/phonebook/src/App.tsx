@@ -13,6 +13,7 @@ const App = () => {
 
   useEffect(() => {
     personServices.getAllData().then((initialData) => {
+      console.log('initial contact book: ', initialData);
       setPersons(initialData);
     });
   }, []);
@@ -39,37 +40,65 @@ const App = () => {
   ) => {
     // some is an array method that returns true if at least one element passes the test (function passed)
     return personList.some(
-      (personItem) =>
-        personItem.name === inputPerson.name ||
-        personItem.phone === inputPerson.phone
+      (personItem) => personItem.name === inputPerson.name
     );
   };
 
   // Add a new person to the phonebook
   const addNewPerson = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const newPerson = {
       name: newName,
       phone: newPhone,
     };
 
-    !checkIfPersonExists(newPerson, persons)
-      ? // if person does not already exist, contact is added
+    if (!checkIfPersonExists(newPerson, persons)) {
+      // if person does not already exist, contact is added
+      personServices
+        .addNewItem(newPerson)
+        .then((addedPerson) => {
+          console.log('added contact: ', addedPerson);
+          setPersons([...persons, addedPerson]);
+          setNewName("");
+          setNewPhone("");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Error adding contact!");
+        });
+    } else {
+      // if person already exists, you may update contact.
+      const existingPerson = persons.find(
+        (person) => person.name === newPerson.name
+      );
+
+      if (
+        window.confirm(
+          `${existingPerson?.name} is already added to the phonebook, replace the old number with a new one?`
+        )
+      ) {
         personServices
-          .addNewItem(newPerson)
-          .then((returnedPerson) => {
-            setPersons([...persons, returnedPerson]);
+          .updateItem(existingPerson?.id, newPerson)
+          .then((updatedPerson) => {
+            console.log('old contact: ', existingPerson, 'new contact: ', updatedPerson);
+            setPersons(
+              persons.map((person) =>
+                person.id !== updatedPerson.id ? person : updatedPerson
+              )
+            );
             setNewName("");
             setNewPhone("");
           })
           .catch((error) => {
             console.log(error);
-            alert("Error adding contact!");
-          })
-      : // if person does already exist in book, contact is NOT added
-        (alert(`Person is already added to phonebook!`),
-        setNewName(""),
-        setNewPhone(""));
+            alert("Error updating contact!");
+          });
+      } else {
+        setNewName("");
+        setNewPhone("");
+      }
+    }
   };
 
   // Returns a filtered list of contacts - input name / phone
@@ -85,7 +114,9 @@ const App = () => {
       personServices
         .deleteItem(id)
         .then(() => {
-          setPersons(persons.filter((person) => person.id !== id ? person : null));
+          setPersons(
+            persons.filter((person) => (person.id !== id ? person : null))
+          );
           console.log(persons.find((person) => person.id === id));
         })
         .catch((error) => {
