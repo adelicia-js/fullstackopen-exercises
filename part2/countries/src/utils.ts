@@ -10,3 +10,4 @@ export const filteredCountries = (
       .includes(searchQuery.toLowerCase());
   });
 };
+
