@@ -11,3 +11,6 @@ export const filteredCountries = (
   });
 };
 
+export const celsiusTemp = (temp: number) => {
+  return Math.round(temp - 273.15);
+}

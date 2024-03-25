@@ -8,7 +8,6 @@ export default function Search(props: SearchItem) {
         className="searchInput"
         value={props.searchQuery}
         onChange={props.handleSearchInput}
-        // onClick={}
       />
     </p>
   );

@@ -101,10 +101,27 @@ li {
 
 .countryContainer {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 1rem;
-  justify-content: space-evenly;
+}
+
+.countryDataContainer {
+  display: grid;
+  grid-template-columns: 20vw 20vw;
+  gap: 1rem;
+}
+
+.countryData, .weatherData {
   text-shadow: 0.1px 0.1px 2px #f4f3f3;
+  border: 1px solid #f8e61c3c;
+  border-radius: 1rem 3rem;
+  background-color: #ccf2c844;
+  padding: 1rem 1.5rem;
+}
+
+.weatherData {
+  border-radius: 3rem 1rem;
 }
 
 .loadingIcon {
