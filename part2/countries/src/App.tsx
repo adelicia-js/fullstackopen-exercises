@@ -15,7 +15,7 @@ import "./App.css";
 function App() {
   const [countries, setCountries] = useState<CountryData[]>([]);
   const [search, setSearch] = useState("");
-
+  
   useEffect(() => {
     countryServices.getAllCountryData().then((data) => setCountries(data));
   }, []);
@@ -25,13 +25,13 @@ function App() {
 
     if (search.length > 0) {
       if (filteredCountriesResult.length > 10) {
-        return <div>Too many matches, specify another filter</div>;
+        return <div className="countryList">Too many matches, specify another filter</div>;
       } else if (
         filteredCountriesResult.length > 1 &&
         filteredCountriesResult.length <= 10
       ) {
         return filteredCountriesResult.map((country) => {
-          return <p key={country.name.common}>{country.name.common}</p>;
+          return <p className="countryList" key={country.name.common}>{country.name.common}</p>;
         });
       } else if (filteredCountriesResult.length === 1) {
         return (
@@ -49,7 +49,7 @@ function App() {
 
   return (
     <div>
-      <h1>Country Info App📌🗺️</h1>
+      <h1 className="appTitle"><span className="appTitleHead">Country Info </span>App📌🗺️</h1>
       <Search
         searchQuery={search}
         handleSearchInput={(event) => setSearch(event.target.value)}

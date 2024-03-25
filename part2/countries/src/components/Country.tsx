@@ -8,13 +8,15 @@ export default function Country(props: CountryData) {
   };
 
   return (
-    <div>
-      <h2>{props.name.common}</h2>
-      <p>Capital: {props.capital}</p>
-      <p>Population: {props.area} sq. km</p>
-      <p>Languages:</p>
-      <ul>{mapLanguages()}</ul>
+    <div className="countryContainer">
       <img src={props.flags.png} alt="country flag" />
+      <div>
+        <h2>{props.name.common}</h2>
+        <p>Capital: {props.capital}</p>
+        <p>Area: {props.area} sq. km</p>
+        <p>Languages:</p>
+        <ul>{mapLanguages()}</ul>
+      </div>
     </div>
   );
 }
