@@ -5,6 +5,8 @@ import { CountryData, WeatherData } from "../types";
 import countryServices from "../services/countries";
 import { celsiusTemp } from "../utils";
 
+import Loading from "./Loading";
+
 export default function Country(props: CountryData) {
   const [weatherData, setWeatherData] = useState<WeatherData>();
 
@@ -26,14 +28,21 @@ export default function Country(props: CountryData) {
     <div className="countryContainer">
       <img src={props.flags.png} alt="country flag" />
       <div className="countryDataContainer">
+        {props ? (
+          <div className="countryData">
+            <h2>{props.name.common}</h2>
+            <p>Capital: {props.capital}</p>
+            <p>Area: {props.area} sq. km.</p>
+            <p>Languages:</p>
+            <ul>{mapLanguages()}</ul>
+          </div>
+        ) : (
+          <div className="countryData loadingContainer">
+            {" "}
+            <Loading />
+          </div>
+        )}
 
-        <div className="countryData">
-          <h2>{props.name.common}</h2>
-          <p>Capital: {props.capital}</p>
-          <p>Area: {props.area} sq. km.</p>
-          <p>Languages:</p>
-          <ul>{mapLanguages()}</ul>
-        </div>
         {weatherData ? (
           <div className="weatherData">
             <h2>Weather in {props.capital}</h2>
@@ -44,9 +53,12 @@ export default function Country(props: CountryData) {
               alt="weather icon"
             />
           </div>
-        ) : null}
+        ) : (
+          <div className="weatherData loadingContainer">
+            <Loading />
+          </div>
+        )}
       </div>
-
     </div>
   );
 }

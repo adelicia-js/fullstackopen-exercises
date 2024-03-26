@@ -117,7 +117,8 @@ li {
   border: 1px solid #f8e61c3c;
   border-radius: 1rem 3rem;
   background-color: #ccf2c844;
-  padding: 1rem 1.5rem;
+  padding: 0rem 1.5rem;
+  box-shadow: 0.1px 0.1px 2px #f4e96a9c;
 }
 
 .weatherData {
@@ -125,7 +126,15 @@ li {
 }
 
 .loadingIcon {
-  animation: rotate 2s linear infinite; /* Adjust duration and timing function as needed */
+  animation: rotate 2s linear infinite;
+}
+
+.loadingContainer {
+  display: flex;
+  height: 100%;
+  min-height: 30vh;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes rotate {
